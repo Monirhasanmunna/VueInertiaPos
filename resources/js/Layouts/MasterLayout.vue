@@ -1,23 +1,17 @@
 <script setup>
 import HeaderLayout from '@/Layouts/HeaderLayout.vue';
 import SidebarLayout from '@/Layouts/SidebarLayout.vue'
-import { Head,Link } from '@inertiajs/vue3';
 import customJs from '@/assets/custom.js';
 import {onMounted} from 'vue';
 
 
 onMounted(() => {
+    window.HSStaticMethods.autoInit();
     customJs();
-
-    setTimeout(() => {
-      window.HSStaticMethods.autoInit();
-    });
 });
 </script>
 
 <template>
-    <Head title="Dashboard"/>
-    
 <div class="main-wrapper">
     <HeaderLayout/>    
     <div class="body flex justify-start">
