@@ -14,4 +14,9 @@ class Category extends Model
         'image',
         'status',
     ];
+
+    public function scopeSearch($query, $search)
+    {
+        return $query->where('name', 'like', '%' . $search . '%');
+    }
 }
