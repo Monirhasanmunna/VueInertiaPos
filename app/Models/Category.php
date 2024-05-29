@@ -15,8 +15,14 @@ class Category extends Model
         'status',
     ];
 
+    public function getSrcAttribute()
+    {
+        return asset($this->image);
+    }
+
     public function scopeSearch($query, $search)
     {
         return $query->where('name', 'like', '%' . $search . '%');
     }
+
 }

@@ -31,7 +31,7 @@ import { HSAccordion } from 'preline/preline';
                     <div id="category-child" class="hs-accordion-content sub-menu-content" :class="{'block' : route().current('category.*')}">
                         <ul class="p-2">
                             <li>
-                                <Link :href="route('category.index')" class="sub-menu" :class="{'text-[#6FD943] font-semibold' : route().current('category.index')}" href="#">
+                                <Link :href="route('category.index')" class="sub-menu" :class="{'text-[#6FD943] font-semibold' : route().current('category.index') || route().current('category.create')}">
                                     <DotIcon class="sub-menu-icon" />
                                     Category List
                                 </Link>

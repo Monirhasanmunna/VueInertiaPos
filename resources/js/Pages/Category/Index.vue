@@ -6,13 +6,16 @@ import {debounce} from 'lodash';
 import { reactive } from 'vue';
 import { watch } from 'vue';
 import { router,Link, Head } from '@inertiajs/vue3';
+import EditIcon from '@/Components/Icons/EditIcon.vue';
+import DeleteIcon from '@/Components/Icons/DeleteIcon.vue';
+import PlusIcon from '@/Components/Icons/PlusIcon.vue';
 
 const props = defineProps({
     categories : Object
 });
 
 const breadcrumb = {
-    title : 'Category',
+    title : 'Category List',
 
     items : [
         {
@@ -42,15 +45,19 @@ watch(selectAndSearch, debounce(function() {
 </script>
 
 <template>
-    <Head title="Category" />
+    <Head title="Category List" />
     <MasterLayout>
-        <BreadcrumbComponent :breadcrumb="breadcrumb" />
+        <div class="w-full px-1.5 flex justify-between items-center">
+            <BreadcrumbComponent :breadcrumb="breadcrumb" />
 
-        <Box class="space-y-6 h-auto">
-            <div class="w-full flex justify-between">
-                <h3 class="text-xl text-[#6FD943] font-semibold">Categeory List</h3>
+            <div class="wrapper flex item-center gap-4">
+                <button class="btn btn-primary text-[20px] p-1.5 rounded-lg bg-[#6FD943] text-white"  data-hs-overlay="#category-create-modal">
+                    <PlusIcon />
+                </button>
             </div>
-
+        </div>
+        
+        <Box class="space-y-6 h-auto mt-3">
             <div class="w-full space-y-5">
                 <div class="w-full flex justify-between items-center">
                         <div class="w-1/12">
@@ -76,28 +83,43 @@ watch(selectAndSearch, debounce(function() {
                     </div>
                 </div>
 
-                <div class="flex flex-col">
+                <div class="flex  flex-col">
                     <div class="-m-1.5 overflow-x-auto">
                         <div class="p-1.5 min-w-full inline-block align-middle">
                             <div class="border rounded-lg shadow overflow-hidden dark:border-neutral-700 dark:shadow-gray-900">
                                 <table class="table">
                                     <thead class="bg-gray-50 dark:bg-neutral-700">
                                         <tr>
-                                            <th width="5%" class="table-th">SL</th>
-                                            <th scope="col" class="table-th">Image</th>
+                                            <th width="10%" class="table-th">SL</th>
+                                            <th width="20%" class="table-th">Image</th>
                                             <th scope="col" class="table-th">Name</th>
-                                            <th scope="col" class="table-th">Status</th>
-                                            <th scope="col" class="table-th text-end">Action</th>
+                                            <th width="25%" class="table-th">Status</th>
+                                            <th width="10%" class="table-th text-center">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody class="divide-y divide-gray-200 dark:divide-neutral-700">
                                         <tr v-for="(category, index) in categories.data" :key="index" >
                                             <td class="table-td">{{ index+1 }}</td>
-                                            <td class="table-td">{{ category.image }}</td>
+                                            <td class="table-td">
+                                                <div v-if="category.src" class="w-[50px] h-[50px] rounded-xl border-2 border-[#6FD943]">
+                                                    <img :src="category.src" class="w-full h-full object-cover" :alt="category.src" srcset="">
+                                                </div>
+
+                                                <div v-else class="w-[50px] h-[50px] rounded-xl border-2 border-[#6FD943] flex justify-center items-center text-[20px] text-gray-300">CA</div>
+                                            </td>
                                             <td class="table-td">{{ category.name }}</td>
-                                            <td class="table-td">{{ category.status }}</td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
-                                                <button type="button" class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400">Delete</button>
+                                            <td class="table-td">
+                                                <span v-if="category.status == 1" class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium border border-teal-500 text-teal-500">Active</span>
+                                                <span v-else class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium border border-red-500 text-red-500">Inactive</span>
+                                            </td>
+                                            <td class="px-6 py-4 flex gap-4 justify-center">
+                                                <Link :href="route('category.edit', category.id)" class="px-2 py-1.5 text-[17px] text-green-500 border border-green-500 rounded-md duration-200 hover:bg-[#6FD943] hover:text-white">
+                                                    <EditIcon/>
+                                                </Link>
+
+                                                <button class="px-2 py-1.5 text-[17px] text-red-500 border border-red-400 rounded-md duration-200 hover:bg-red-400 hover:text-white">
+                                                    <DeleteIcon/>
+                                                </button>
                                             </td>
                                         </tr>
 
@@ -111,7 +133,7 @@ watch(selectAndSearch, debounce(function() {
 
                             <div class="py-1 flex justify-end mt-2" v-if="categories.data.length > 0">
                                 <nav class="flex items-center space-x-1">
-                                    <Link v-for="(link, index) in categories.links" :key="index" :href="link.url" v-html="link.label" type="button" class="table-paginate"></Link>
+                                    <Link v-for="(link, index) in categories.links" :key="index" :href="link.url" v-html="link.label" :class="{'bg-[#6FD943] font-semibold text-white' : link.active}" type="button" class="table-paginate"></Link>
                                 </nav>
                             </div>
 
@@ -120,6 +142,35 @@ watch(selectAndSearch, debounce(function() {
                 </div>
             </div>
         </Box>
+
+
+        <div id="category-create-modal" class="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto pointer-events-none">
+            <div class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 ease-out transition-all sm:max-w-lg sm:w-full m-3 sm:mx-auto">
+                <div class="flex flex-col bg-white border shadow-sm rounded-xl pointer-events-auto dark:bg-neutral-800 dark:border-neutral-700 dark:shadow-neutral-700/70">
+                <div class="flex justify-between items-center py-3 px-4 border-b dark:border-neutral-700">
+                    <h3 class="font-bold text-gray-800 dark:text-white">
+                    Modal title
+                    </h3>
+                    <button type="button" class="flex justify-center items-center size-7 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-neutral-700" data-hs-overlay="#category-create-modal">
+                    <span class="sr-only">Close</span>
+                    <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 6 6 18"></path>
+                        <path d="m6 6 12 12"></path>
+                    </svg>
+                    </button>
+                </div>
+                    <div class="p-4 overflow-y-auto">
+                        <form action="">
+                            <div class="form-group">
+                                <label for="name" class="label">Name</label>
+                                <input type="text" autofocus class="form-input" placeholder="Enter name" id="name">
+                                <span class="form-error" >Name is required</span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </MasterLayout>
 </template>
 

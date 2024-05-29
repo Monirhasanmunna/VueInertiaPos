@@ -22,4 +22,10 @@ class CategoryController extends Controller
             'categories' => $categories
         ]);
     }
+
+
+    public function create(Request $request)
+    {
+        return Inertia::render('Category/Create');
+    }
 }
