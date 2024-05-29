@@ -2,6 +2,10 @@
 import DashboardIcon from '@/Components/Icons/DashboardIcon.vue';
 import DotIcon from '@/Components/Icons/DotIcon.vue';
 import MenuArrowIcon from '@/Components/Icons/MenuArrowIcon.vue';
+import CategoryIcon from '@/Components/Icons/CategoryIcon.vue';
+import {Link, Head, usePage} from '@inertiajs/vue3';
+import { HSAccordion } from 'preline/preline';
+
 </script>
 
 <template>
@@ -9,40 +13,28 @@ import MenuArrowIcon from '@/Components/Icons/MenuArrowIcon.vue';
         <nav class="hs-accordion-group py-6 px-[8px] w-full flex flex-col flex-wrap" data-hs-accordion-always-open>
             <ul class="space-y-2">
                 <li>
-                    <a class="flex items-center gap-x-2 py-[9px] px-2.5 text-[15px] text-gray-700 duration-200 rounded-lg hover:bg-[#6FD943] hover:text-white hover:font-semibold dark:bg-neutral-700 dark:text-white" href="#">
+                    <Link :href="route('dashboard')" :class="{'bg-[#6FD943] font-semibold text-white' : route().current('dashboard')}" class="flex items-center gap-x-3.5 py-[9px] px-2.5 text-[15px] text-gray-700 duration-200 rounded-lg hover:bg-[#6FD943] hover:text-white hover:font-semibold dark:bg-neutral-700 dark:text-white" href="#">
                     <DashboardIcon class="menu-icon" />
                     Dashboard
-                    </a>
+                    </Link>
                 </li>
 
 
-                <li class="hs-accordion" id="account-accordion">
-                    <button type="button" class="menu hs-accordion-toggle">
-                    <svg class="flex-shrink-0 mt-0.5 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="15" r="3"/><circle cx="9" cy="7" r="4"/><path d="M10 15H6a4 4 0 0 0-4 4v2"/><path d="m21.7 16.4-.9-.3"/><path d="m15.2 13.9-.9-.3"/><path d="m16.6 18.7.3-.9"/><path d="m19.1 12.2.3-.9"/><path d="m19.6 18.7-.4-1"/><path d="m16.8 12.3-.4-1"/><path d="m14.3 16.6 1-.4"/><path d="m20.7 13.8 1-.4"/></svg>
-                    Account
+                <li class="hs-accordion" id="category"  >
+                    <button type="button" class="menu hs-accordion-toggle" :class="{'bg-[#6FD943] font-semibold text-white' : route().current('category.*')}">
+                    <CategoryIcon class="menu-icon" />
+                    Category
 
                     <MenuArrowIcon />
                     </button>
 
-                    <div id="account-accordion-child" class="hs-accordion-content sub-menu-content">
+                    <div id="category-child" class="hs-accordion-content sub-menu-content" :class="{'block' : route().current('category.*')}">
                         <ul class="p-2">
                             <li>
-                            <a class="sub-menu" href="#">
-                                <DotIcon class="sub-menu-icon" />
-                                Link 1
-                            </a>
-                            </li>
-                            <li>
-                                <a class="sub-menu" href="#">
-                                <DotIcon class="sub-menu-icon" />
-                                Link 2
-                            </a>
-                            </li>
-                            <li>
-                                <a class="sub-menu" href="#">
-                                <DotIcon class="sub-menu-icon" />
-                                Link 3
-                            </a>
+                                <Link :href="route('category.index')" class="sub-menu" :class="{'text-[#6FD943] font-semibold' : route().current('category.index')}" href="#">
+                                    <DotIcon class="sub-menu-icon" />
+                                    Category List
+                                </Link>
                             </li>
                         </ul>
                     </div>

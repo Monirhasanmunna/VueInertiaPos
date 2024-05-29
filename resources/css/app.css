@@ -5,11 +5,11 @@
 
 @layer components {
     .menu {
-        @apply w-full text-[15px]  text-start flex items-center gap-x-3.5 py-[9px] px-2.5 hs-accordion-active:bg-[#6FD943] hs-accordion-active:text-white text-neutral-700 rounded-lg hover:bg-[#6FD943] duration-150 hover:text-white hover:font-semibold dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-300 dark:hs-accordion-active:text-white;
+        @apply w-full text-[15px]  text-start flex items-center gap-x-3.5 py-[9px] px-2.5 hs-accordion-active:bg-[#6FD943] hs-accordion-active:text-white text-gray-600 rounded-lg hover:bg-[#6FD943] duration-150 hover:text-white hover:font-semibold dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-300 dark:hs-accordion-active:text-white;
     }
 
     .menu-icon {
-        @apply text-[21px];
+        @apply text-[24px];
     }
 
     .sub-menu {
