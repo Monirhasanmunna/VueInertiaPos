@@ -13,7 +13,10 @@ class Category extends Model
         'name',
         'image',
         'status',
+        'slug'
     ];
+
+    protected $appends = ['src'];
 
     public function getSrcAttribute()
     {

@@ -60,10 +60,11 @@
     }
 
     .label {
-        @apply text-sm text-gray-500;
+        @apply text-sm text-gray-400 font-semibold;
     }
 
     .form-error {
-        @apply text-[12px] text-red-500;
+        @apply text-[12px] text-red-500 px-1;
     }
+    
 }
