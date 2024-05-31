@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -31,7 +32,8 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-   Route::group(['as'=> 'category.', 'prefix'=> 'category'], function(){
+
+    Route::group(['as'=> 'category.', 'prefix'=> 'category'], function(){
         Route::get('/', [CategoryController::class, 'index'])->name('index');
         Route::get('/create', [CategoryController::class, 'create'])->name('create');
         Route::post('/store', [CategoryController::class, 'store'])->name('store');
@@ -39,6 +41,15 @@ Route::middleware('auth')->group(function () {
         Route::put('/update/{id}', [CategoryController::class, 'update'])->name('update');
         Route::delete('/delete/{slug}', [CategoryController::class, 'destroy'])->name('destroy');
    });
+
+    Route::group(['as'=> 'brand.', 'prefix'=> 'brand'], function(){
+        Route::get('/', [BrandController::class, 'index'])->name('index');
+        Route::get('/create', [BrandController::class, 'create'])->name('create');
+        Route::post('/store', [BrandController::class, 'store'])->name('store');
+        Route::get('/edit/{slug}', [BrandController::class, 'edit'])->name('edit');
+        Route::put('/update/{id}', [BrandController::class, 'update'])->name('update');
+        Route::delete('/delete/{slug}', [BrandController::class, 'destroy'])->name('destroy');
+    });
 });
 
 require __DIR__.'/auth.php';

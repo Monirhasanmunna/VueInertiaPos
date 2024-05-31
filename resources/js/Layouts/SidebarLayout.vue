@@ -40,6 +40,25 @@ import { HSAccordion } from 'preline/preline';
                     </div>
                 </li>
 
+                <li class="hs-accordion" id="brand"  >
+                    <button type="button" class="menu hs-accordion-toggle" :class="{'bg-[#6FD943] font-semibold text-white' : route().current('brand.*')}">
+                    <CategoryIcon class="menu-icon" />
+                    Brand
+
+                    <MenuArrowIcon />
+                    </button>
+
+                    <div id="brand-child" class="hs-accordion-content sub-menu-content" :class="{'block' : route().current('brand.*')}">
+                        <ul class="p-2">
+                            <li>
+                                <Link :href="route('brand.index')" class="sub-menu" :class="{'text-[#6FD943] font-semibold' : route().current('brand.index') || route().current('brand.create')}">
+                                    <DotIcon class="sub-menu-icon" />
+                                    Brand List
+                                </Link>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
             
             </ul>
         </nav>
