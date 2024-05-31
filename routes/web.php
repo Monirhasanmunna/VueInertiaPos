@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\TaxController;
 use App\Http\Controllers\Backend\UnitController;
 use App\Http\Controllers\ProfileController;
@@ -70,6 +71,16 @@ Route::middleware('auth')->group(function () {
         Route::put('/update/{id}', [TaxController::class, 'update'])->name('update');
         Route::delete('/delete/{slug}', [TaxController::class, 'destroy'])->name('destroy');
     });
+
+    Route::group(['as'=> 'product.', 'prefix'=> 'product'], function(){
+        Route::get('/', [ProductController::class, 'index'])->name('index');
+        Route::get('/create', [ProductController::class, 'create'])->name('create');
+        Route::post('/store', [ProductController::class, 'store'])->name('store');
+        Route::get('/edit/{slug}', [ProductController::class, 'edit'])->name('edit');
+        Route::put('/update/{id}', [ProductController::class, 'update'])->name('update');
+        Route::delete('/delete/{slug}', [ProductController::class, 'destroy'])->name('destroy');
+    });
+    
 });
 
 require __DIR__.'/auth.php';

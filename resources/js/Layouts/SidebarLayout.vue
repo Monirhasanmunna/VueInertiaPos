@@ -23,6 +23,26 @@ import {Link} from '@inertiajs/vue3';
                 </li>
 
 
+                <li class="hs-accordion" id="product"  >
+                    <button type="button" class="menu hs-accordion-toggle" :class="{'bg-[#6FD943] font-semibold text-white' : route().current('product.*')}">
+                    <CategoryIcon class="menu-icon" />
+                    Product
+
+                    <MenuArrowIcon />
+                    </button>
+
+                    <div id="product-child" class="hs-accordion-content sub-menu-content" :class="{'block' : route().current('product.*')}">
+                        <ul class="p-2">
+                            <li>
+                                <Link :href="route('product.index')" class="sub-menu" :class="{'active' : route().current('product.index') || route().current('product.create')}">
+                                    <DotIcon class="sub-menu-icon" />
+                                    Product List
+                                </Link>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
                 <li class="hs-accordion" id="category"  >
                     <button type="button" class="menu hs-accordion-toggle" :class="{'bg-[#6FD943] font-semibold text-white' : route().current('category.*')}">
                     <CategoryIcon class="menu-icon" />

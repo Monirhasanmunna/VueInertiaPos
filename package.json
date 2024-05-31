@@ -20,6 +20,7 @@
     },
     "dependencies": {
         "lodash": "^4.17.21",
-        "preline": "^2.0.3"
+        "preline": "^2.0.3",
+        "vue3-barcode": "^1.0.1"
     }
 }
