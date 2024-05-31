@@ -3,6 +3,8 @@ import DashboardIcon from '@/Components/Icons/DashboardIcon.vue';
 import DotIcon from '@/Components/Icons/DotIcon.vue';
 import MenuArrowIcon from '@/Components/Icons/MenuArrowIcon.vue';
 import CategoryIcon from '@/Components/Icons/CategoryIcon.vue';
+import BrandIcon from '@/Components/Icons/BrandIcon.vue';
+import UnitIcon from '@/Components/Icons/UnitIcon.vue';
 import {Link, Head, usePage} from '@inertiajs/vue3';
 import { HSAccordion } from 'preline/preline';
 
@@ -42,7 +44,7 @@ import { HSAccordion } from 'preline/preline';
 
                 <li class="hs-accordion" id="brand"  >
                     <button type="button" class="menu hs-accordion-toggle" :class="{'bg-[#6FD943] font-semibold text-white' : route().current('brand.*')}">
-                    <CategoryIcon class="menu-icon" />
+                    <BrandIcon class="menu-icon" />
                     Brand
 
                     <MenuArrowIcon />
@@ -60,6 +62,25 @@ import { HSAccordion } from 'preline/preline';
                     </div>
                 </li>
             
+                <li class="hs-accordion" id="unit"  >
+                    <button type="button" class="menu hs-accordion-toggle" :class="{'bg-[#6FD943] font-semibold text-white' : route().current('unit.*')}">
+                    <UnitIcon class="menu-icon" />
+                    Unit
+
+                    <MenuArrowIcon />
+                    </button>
+
+                    <div id="unit-child" class="hs-accordion-content sub-menu-content" :class="{'block' : route().current('unit.*')}">
+                        <ul class="p-2">
+                            <li>
+                                <Link :href="route('unit.index')" class="sub-menu" :class="{'text-[#6FD943] font-semibold' : route().current('unit.index') || route().current('unit.create')}">
+                                    <DotIcon class="sub-menu-icon" />
+                                    Unit List
+                                </Link>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
             </ul>
         </nav>
     </div>

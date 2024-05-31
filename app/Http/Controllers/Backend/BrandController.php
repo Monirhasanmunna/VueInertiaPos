@@ -41,7 +41,7 @@ class BrandController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|unique:categories',
+            'name' => 'required|unique:brands',
             'image' => 'required|image|mimes:png,jpg,jpeg'
         ]);
 
@@ -81,7 +81,7 @@ class BrandController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'name' => 'required|unique:categories,name,'. $id,
+            'name' => 'required|unique:brands,name,'. $id,
         ]);
 
         $brand = Brand::where('id', $id)->first();

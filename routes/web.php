@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Backend\UnitController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -40,7 +41,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/edit/{slug}', [CategoryController::class, 'edit'])->name('edit');
         Route::put('/update/{id}', [CategoryController::class, 'update'])->name('update');
         Route::delete('/delete/{slug}', [CategoryController::class, 'destroy'])->name('destroy');
-   });
+    });
 
     Route::group(['as'=> 'brand.', 'prefix'=> 'brand'], function(){
         Route::get('/', [BrandController::class, 'index'])->name('index');
@@ -49,6 +50,15 @@ Route::middleware('auth')->group(function () {
         Route::get('/edit/{slug}', [BrandController::class, 'edit'])->name('edit');
         Route::put('/update/{id}', [BrandController::class, 'update'])->name('update');
         Route::delete('/delete/{slug}', [BrandController::class, 'destroy'])->name('destroy');
+    });
+
+    Route::group(['as'=> 'unit.', 'prefix'=> 'unit'], function(){
+        Route::get('/', [UnitController::class, 'index'])->name('index');
+        Route::get('/create', [UnitController::class, 'create'])->name('create');
+        Route::post('/store', [UnitController::class, 'store'])->name('store');
+        Route::get('/edit/{slug}', [UnitController::class, 'edit'])->name('edit');
+        Route::put('/update/{id}', [UnitController::class, 'update'])->name('update');
+        Route::delete('/delete/{slug}', [UnitController::class, 'destroy'])->name('destroy');
     });
 });
 
