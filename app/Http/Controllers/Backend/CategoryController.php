@@ -70,6 +70,7 @@ class CategoryController extends Controller
 
         $category = Category::where('id', $id)->first();
         $category->name = $request->name;
+        $category->status = $request->status;
         $category->slug = Str::slug($request->name);
         $category->save();
 

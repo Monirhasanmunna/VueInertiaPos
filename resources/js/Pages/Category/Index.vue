@@ -69,6 +69,7 @@ const editForm = useForm({
     image : '',
     src: '',
     id: '',
+    status: '',
     _method: 'PUT'
 });
 
@@ -81,6 +82,7 @@ function edit($slug){
             editForm.name = res.data.name
             editForm.id = res.data.id
             editForm.src = res.data.src
+            editForm.status = res.data.status
             HSOverlay.open('#category-edit-modal')
         }
     });
@@ -233,9 +235,18 @@ function destroy($id){
                                 <input type="file" @input="fileInput($event, editForm)" name="file-input-medium" id="file-input-medium" class="block w-full border border-gray-400 shadow-sm focus:z-10 rounded-md text-sm focus:ring-[#6FD943] disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400
                                 file:bg-gray-50 file:border-0
                                 file:me-4
-                                file:py-3 file:px-4
+                                file:py-2.5 file:px-4
                                 dark:file:bg-neutral-700 dark:file:text-neutral-400">
                                 <span v-if="editForm.errors.image" class="form-error" >{{ editForm.errors.image }}</span>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="status" class="label">Status</label>
+                                <select class="form-input" v-model="editForm.status">
+                                    <option value="1" >Active</option>
+                                    <option value="0" >Inactive</option>
+                                </select>
                             </div>
 
 
