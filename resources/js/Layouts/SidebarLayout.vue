@@ -5,6 +5,7 @@ import MenuArrowIcon from '@/Components/Icons/MenuArrowIcon.vue';
 import CategoryIcon from '@/Components/Icons/CategoryIcon.vue';
 import BrandIcon from '@/Components/Icons/BrandIcon.vue';
 import UnitIcon from '@/Components/Icons/UnitIcon.vue';
+import TaxIcon from '@/Components/Icons/TaxIcon.vue';
 import {Link} from '@inertiajs/vue3';
 
 
@@ -81,6 +82,28 @@ import {Link} from '@inertiajs/vue3';
                         </ul>
                     </div>
                 </li>
+            
+                <li class="hs-accordion" id="tax"  >
+                    <button type="button" class="menu hs-accordion-toggle" :class="{'bg-[#6FD943] font-semibold text-white' : route().current('tax.*')}">
+                    <TaxIcon class="menu-icon" />
+                    Tax
+
+                    <MenuArrowIcon />
+                    </button>
+
+                    <div id="tax-child" class="hs-accordion-content sub-menu-content" :class="{'block' : route().current('tax.*')}">
+                        <ul class="p-2">
+                            <li>
+                                <Link :href="route('tax.index')" class="sub-menu" :class="{'active' : route().current('tax.index') || route().current('tax.create')}">
+                                    <DotIcon class="sub-menu-icon" />
+                                    Tax List
+                                </Link>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+
             </ul>
         </nav>
     </div>

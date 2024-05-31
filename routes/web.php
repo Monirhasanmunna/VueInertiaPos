@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Backend\TaxController;
 use App\Http\Controllers\Backend\UnitController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -59,6 +60,15 @@ Route::middleware('auth')->group(function () {
         Route::get('/edit/{slug}', [UnitController::class, 'edit'])->name('edit');
         Route::put('/update/{id}', [UnitController::class, 'update'])->name('update');
         Route::delete('/delete/{slug}', [UnitController::class, 'destroy'])->name('destroy');
+    });
+
+    Route::group(['as'=> 'tax.', 'prefix'=> 'tax'], function(){
+        Route::get('/', [TaxController::class, 'index'])->name('index');
+        Route::get('/create', [TaxController::class, 'create'])->name('create');
+        Route::post('/store', [TaxController::class, 'store'])->name('store');
+        Route::get('/edit/{slug}', [TaxController::class, 'edit'])->name('edit');
+        Route::put('/update/{id}', [TaxController::class, 'update'])->name('update');
+        Route::delete('/delete/{slug}', [TaxController::class, 'destroy'])->name('destroy');
     });
 });
 
