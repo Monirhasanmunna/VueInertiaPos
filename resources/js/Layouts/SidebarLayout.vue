@@ -5,8 +5,8 @@ import MenuArrowIcon from '@/Components/Icons/MenuArrowIcon.vue';
 import CategoryIcon from '@/Components/Icons/CategoryIcon.vue';
 import BrandIcon from '@/Components/Icons/BrandIcon.vue';
 import UnitIcon from '@/Components/Icons/UnitIcon.vue';
-import {Link, Head, usePage} from '@inertiajs/vue3';
-import { HSAccordion } from 'preline/preline';
+import {Link} from '@inertiajs/vue3';
+
 
 </script>
 
@@ -15,7 +15,7 @@ import { HSAccordion } from 'preline/preline';
         <nav class="hs-accordion-group py-6 px-[8px] w-full flex flex-col flex-wrap" data-hs-accordion-always-open>
             <ul class="space-y-2">
                 <li>
-                    <Link :href="route('dashboard')" :class="{'bg-[#6FD943] font-semibold text-white' : route().current('dashboard')}" class="flex items-center gap-x-3.5 py-[9px] px-2.5 text-[15px] text-gray-700 duration-200 rounded-lg hover:bg-[#6FD943] hover:text-white hover:font-semibold dark:bg-neutral-700 dark:text-white" href="#">
+                    <Link :href="route('dashboard')" :class="{'bg-[#6FD943] font-semibold text-white' : route().current('dashboard')}" class="flex items-center gap-x-3.5 py-[9px] px-2.5 text-[15px] text-gray-700 duration-200 rounded-lg hover:bg-[#6FD943] hover:text-white hover:font-semibold  dark:text-white">
                     <DashboardIcon class="menu-icon" />
                     Dashboard
                     </Link>
@@ -33,7 +33,7 @@ import { HSAccordion } from 'preline/preline';
                     <div id="category-child" class="hs-accordion-content sub-menu-content" :class="{'block' : route().current('category.*')}">
                         <ul class="p-2">
                             <li>
-                                <Link :href="route('category.index')" class="sub-menu" :class="{'text-[#6FD943] font-semibold' : route().current('category.index') || route().current('category.create')}">
+                                <Link :href="route('category.index')" class="sub-menu" :class="{'active' : route().current('category.index') || route().current('category.create')}">
                                     <DotIcon class="sub-menu-icon" />
                                     Category List
                                 </Link>
@@ -53,7 +53,7 @@ import { HSAccordion } from 'preline/preline';
                     <div id="brand-child" class="hs-accordion-content sub-menu-content" :class="{'block' : route().current('brand.*')}">
                         <ul class="p-2">
                             <li>
-                                <Link :href="route('brand.index')" class="sub-menu" :class="{'text-[#6FD943] font-semibold' : route().current('brand.index') || route().current('brand.create')}">
+                                <Link :href="route('brand.index')" class="sub-menu" :class="{'active' : route().current('brand.index') || route().current('brand.create')}">
                                     <DotIcon class="sub-menu-icon" />
                                     Brand List
                                 </Link>
@@ -73,7 +73,7 @@ import { HSAccordion } from 'preline/preline';
                     <div id="unit-child" class="hs-accordion-content sub-menu-content" :class="{'block' : route().current('unit.*')}">
                         <ul class="p-2">
                             <li>
-                                <Link :href="route('unit.index')" class="sub-menu" :class="{'text-[#6FD943] font-semibold' : route().current('unit.index') || route().current('unit.create')}">
+                                <Link :href="route('unit.index')" class="sub-menu" :class="{'active' : route().current('unit.index') || route().current('unit.create')}">
                                     <DotIcon class="sub-menu-icon" />
                                     Unit List
                                 </Link>

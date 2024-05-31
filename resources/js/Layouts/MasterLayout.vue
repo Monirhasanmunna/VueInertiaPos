@@ -19,7 +19,7 @@ onMounted(() => {
         <div class="right w-full">
             <main >
                 <div class="w-full min-h-[900px] bg-gray-200 dark:bg-slate-900 p-5">
-                    <div id="bodyCard" class="shadow-md min-h-screen p-5 bg-white md:ml-[250px] rounded-md">
+                    <div id="bodyCard" class="shadow-md min-h-screen p-5 bg-white dark:bg-gray-800 md:ml-[250px] rounded-md">
                         <slot></slot>
                     </div>
                 </div>
