@@ -79,6 +79,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/edit/{slug}', [ProductController::class, 'edit'])->name('edit');
         Route::put('/update/{id}', [ProductController::class, 'update'])->name('update');
         Route::delete('/delete/{slug}', [ProductController::class, 'destroy'])->name('destroy');
+
+        // ajax route
+        Route::get('/get-all-data', [ProductController::class, 'getAllData'])->name('getAllData');
     });
     
 });

@@ -64,7 +64,7 @@
     }
 
     .label {
-        @apply text-sm text-gray-400 font-semibold;
+        @apply text-sm text-gray-500 font-semibold;
     }
 
     .form-error {

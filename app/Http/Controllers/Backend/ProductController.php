@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
+use App\Models\Category;
 use App\Models\Product;
+use App\Models\Tax;
+use App\Models\Unit;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -32,11 +36,22 @@ class ProductController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for getAllData a new resource.
      */
-    public function create()
+    public function getAllData()
     {
-        //
+        $categories = Category::where('status', true)->get();
+        $brands = Brand::where('status', true)->get();
+        $units = Unit::where('status', true)->get();
+        $taxes = Tax::where('status', true)->get(); 
+
+
+        return response()->json([
+            'categories' => $categories,
+            'brands' => $brands,
+            'units' => $units,
+            'taxes' => $taxes
+        ]);
     }
 
     /**
