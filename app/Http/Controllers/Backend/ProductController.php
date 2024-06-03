@@ -10,9 +10,14 @@ use App\Models\Tax;
 use App\Models\Unit;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Http\Traits\generateUniqueSKU;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
+    use generateUniqueSKU;
     /**
      * Display a listing of the resource.
      */
@@ -27,6 +32,7 @@ class ProductController extends Controller
                     ->paginate($count)
                     ->withQueryString();
 
+        // return $products;
         
         return Inertia::render('Product/Index',[
             'products' => $products,
@@ -59,7 +65,51 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|unique:products',
+            'description' => 'required',
+            'category_id' => 'required',
+            'brand_id' => 'required',
+            'unit_id' => 'required',
+            'tax_id' => 'required',
+            'images.*' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'purchase_price' => 'required',
+            'selling_price' => 'required',
+        ]);
+
+
+        $product = new Product();
+        $product->name = $request->name;
+        $product->unique_code = $this->generateUniqueSKU();
+        $product->category_id = $request->category_id;
+        $product->brand_id = $request->brand_id;
+        $product->unit_id = $request->unit_id;
+        $product->tax_id = $request->tax_id;
+        $product->save();
+
+
+        $product->details()->create([
+            'product_id' => $product->id,
+            'description' => $request->description,
+            'purchase_price' => $request->purchase_price,
+            'selling_price' => $request->selling_price,
+        ]);
+
+
+        foreach ($request->images as $key => $image) {
+
+            $newFileName   = $this->generateUniqueSKU() . '.' . $image->getClientOriginalExtension();
+            $directory   = 'uploads/' . 'products' . '/';
+            $image->move($directory, $newFileName);
+
+            $product->images()->create([
+                'product_id' => $product->id,
+                'image' => $directory . $newFileName
+            ]);
+        }
+
+
+        return Redirect::back();
     }
 
     /**

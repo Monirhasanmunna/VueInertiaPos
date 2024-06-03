@@ -24,10 +24,9 @@ trait ImageSaver
 
             // <!-- create unique file name -->
             $newFileName   = time() . '.' . $file->getClientOriginalExtension();
-            $subdomain = "./";
 
             // <!-- create upload directory -->
-            $directory   = $subdomain . '_uploads/' . $basePath . '/' . date('Y') . '/';
+            $directory   = 'uploads/' . $basePath . '/';
 
             // <!-- create store file to directory -->
             $file->move($directory, $newFileName);

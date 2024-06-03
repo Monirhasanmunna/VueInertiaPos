@@ -12,7 +12,7 @@ import PlusIcon from '@/Components/Icons/PlusIcon.vue';
 import { HSOverlay } from 'preline/preline';
 import axios from 'axios';
 import ProductCreateModalComponent from '@/Components/Backend/Product/ProductCreateModalComponent.vue';
-
+import Vue3Barcode from 'vue3-barcode';
 
 const props = defineProps({
     products : Object,
@@ -60,8 +60,7 @@ function fileInput(event, form){
 function create(createForm){
     createForm.post(route('product.store'), {
         onSuccess: () => {
-            createForm.name = ''
-            createForm.image = ''
+            createForm.reset()
             HSOverlay.close('#product-create-modal')
         }
     });
@@ -108,6 +107,8 @@ function destroy($id){
     });
 }
 
+
+console.log(props.products.data);
 </script>
 
 <template>
@@ -115,6 +116,7 @@ function destroy($id){
     <MasterLayout>
         <div class="w-full px-1.5 flex justify-between items-center">
             <BreadcrumbComponent :breadcrumb="breadcrumb" />
+
 
             <div class="wrapper flex item-center gap-4">
                 <button class="btn btn-primary text-[20px] p-1.5 rounded-lg bg-[#6FD943] text-white"  data-hs-overlay="#product-create-modal">
@@ -156,29 +158,45 @@ function destroy($id){
                                 <table class="table">
                                     <thead class="bg-gray-50 dark:bg-neutral-700">
                                         <tr>
-                                            <th width="10%" class="table-th">SL</th>
-                                            <th width="20%" class="table-th">Image</th>
-                                            <th scope="col" class="table-th">Name</th>
-                                            <th width="25%" class="table-th">Status</th>
-                                            <th width="10%" class="table-th text-center">Action</th>
+                                            <th width="3%" class="table-th">SL</th>
+                                            <th scope="col" class="table-th text-center">Image</th>
+                                            <th scope="col" class="table-th text-center">Product Name</th>
+                                            <th scope="col" class="table-th text-center">Category</th>
+                                            <th scope="col" class="table-th text-center">Brand</th>
+                                            <th scope="col" class="table-th text-center">Unit</th>
+                                            <th scope="col" class="table-th text-center">Tax</th>
+                                            <th scope="col" class="table-th text-center">Purchase Price</th>
+                                            <th scope="col" class="table-th text-center">Selling Price</th>
+                                            <th scope="col" class="table-th text-center">Quantity</th>
+                                            <th scope="col" class="table-th text-center">Barcode</th>
+                                            <th width="10%" class="table-th  text-center">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody class="divide-y divide-gray-200 dark:divide-neutral-700">
-                                        <!-- <tr v-for="(product, index) in products.data" :key="index" >
+                                        <tr v-for="(product, index) in products.data" :key="index" >
                                             <td class="table-td">{{ index+1 }}</td>
                                             <td class="table-td">
-                                                <div v-if="product.image" class="w-[60px] h-[60px] overflow-hidden rounded-xl border-2 border-[#6FD943]">
-                                                    <img :src="product.src" class="w-full h-full object-cover" :alt="product.src" srcset="">
+                                                <div v-if="product.images" class="w-[50px] h-[50px] overflow-hidden rounded-xl border-2 border-[#6FD943]">
+                                                    <img :src="product.images[0].src" class="w-full h-full object-cover" :alt="product.images[0].src" srcset="">
                                                 </div>
 
-                                                <div v-else class="w-[60px] h-[60px] rounded-xl border-2 border-[#6FD943] flex justify-center items-center text-[20px] text-gray-300">CA</div>
+                                                <div v-else class="w-[50px] h-[50px] rounded-xl border-2 border-[#6FD943] flex justify-center items-center text-[20px] text-gray-300">CA</div>
                                             </td>
-                                            <td class="table-td">{{ product.name }}</td>
-                                            <td class="table-td">
-                                                <span v-if="product.status == 1" class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium border border-teal-500 text-teal-500">Active</span>
-                                                <span v-else class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium border border-red-500 text-red-500">Inactive</span>
+                                            <td class="table-td text-center">{{ product.name }}</td>
+                                            <td class="table-td text-center">{{ product.category.name }}</td>
+                                            <td class="table-td text-center">{{ product.brand.name }}</td>
+                                            <td class="table-td text-center">{{ product.unit.name }}</td>
+                                            <td class="table-td text-center">{{ product.tax.name }}</td>
+                                            <td class="table-td text-center">{{ '$'+ product.details.purchase_price }}</td>
+                                            <td class="table-td text-center">{{ '$'+ product.details.selling_price }}</td>
+                                            <td class="table-td text-center">
+                                                <span v-if="product.details.quantity != 0" class="inline-flex items-center gap-x-1 py-1.5 px-2.5 cursor-pointer rounded-full text-[16px] font-medium border border-[#6FD943] text-[#6FD943] duration-200 hover:bg-[#6FD943] hover:text-white">{{ product.details.quantity }}</span>
+                                                <span v-else class="inline-flex items-center gap-x-1 py-1.5 px-2.5 cursor-pointer rounded-full text-[16px] font-medium border border-red-500 text-red-500 duration-200 hover:bg-red-500 hover:text-white">{{ product.details.quantity }}</span>
                                             </td>
-                                            <td class="table-td flex gap-4 items-center h-[90px]">
+                                            <td class="table-td text-center">
+                                                <vue3-barcode :value="product.unique_code" :height="40" :width="1.5" :fontSize="12"  />
+                                            </td>
+                                            <td class="table-td flex gap-4 justify-center items-center h-[90px]">
                                                 <button @click="edit(product.slug)" class="px-2 py-1.5 text-[17px] text-green-500 border border-green-500 rounded-md duration-200 hover:bg-[#6FD943] hover:text-white">
                                                     <EditIcon/>
                                                 </button>
@@ -187,7 +205,7 @@ function destroy($id){
                                                     <DeleteIcon/>
                                                 </button>
                                             </td>
-                                        </tr> -->
+                                        </tr>
 
                                         <tr v-if="products.data.length == 0">
                                             <th colspan="5" class="text-center p-3 text-gray-400 font-semibold">No data found</th>

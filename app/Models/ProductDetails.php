@@ -9,15 +9,13 @@ class ProductDetails extends Model
 {
     use HasFactory;
 
-    protected $fillabe = [
+    protected $fillable = [
         'id', 
         'product_id', 
-        'unique_code', 
         'description', 
         'purchase_price', 
-        'saling_price', 
+        'selling_price', 
         'quantity', 
-        'color'
     ];
 
 

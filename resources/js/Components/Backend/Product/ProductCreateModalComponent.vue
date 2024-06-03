@@ -48,12 +48,6 @@ function deleteImage(index){
 }
 
 
-function submit(){
-    emits('create', createForm);
-}
-
-
-
 const categories = ref([]);
 const brands = ref([]);
 const units = ref([]);
@@ -70,6 +64,11 @@ function getAllData(){
 
 
 onMounted(() => getAllData());
+
+
+function submit(){
+    emits('create', createForm);
+}
 
 </script>
 
@@ -89,120 +88,126 @@ onMounted(() => getAllData());
                 </svg>
                 </button>
             </div>
-                <div class="p-4 space-y-8 py-8">
-                    <div class="form-group">
-                        <label for="name" class="label">Product Name</label>
-                        <input type="text" v-model="createForm.name" autofocus class="form-input" placeholder="Enter name" id="name">
-                        <span v-if="createForm.errors.name" class="form-error" >{{ createForm.errors.name }}</span>
-                    </div>
-
-                    <div class="form-group h-auto">
-                        <label for="image" class="label">Product Description</label>
-                        <QuillEditor style="height: 150px;" theme="snow" />
-                        <span v-if="createForm.errors.image" class="form-error" >{{ createForm.errors.image }}</span>
-                    </div>
-
-
-                    <div class="row flex gap-4">
-                        <div class="form-group w-6/12">
-                            <label for="category" class="label">Category</label>
-                            <select name="category_id" class="form-input text-gray-500" id="category">
-
-                                <option v-for="category in categories" :key="category.id" :value="category.id">{{ category.name }}</option>
-
-                            </select>
-                            <span v-if="createForm.errors.name" class="form-error" >{{ createForm.errors.name }}</span>
+                <div class="p-4 py-8">
+                    
+                    <form class="space-y-8" @submit.prevent="submit">
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="name" class="label">Product Name</label>
+                                <input type="text" v-model="createForm.name" autofocus class="form-input" placeholder="Enter name" id="name">
+                                <span v-if="createForm.errors.name" class="form-error" >{{ createForm.errors.name }}</span>
+                            </div>
                         </div>
-
-                        <div class="form-group w-6/12">
-                            <label for="brand" class="label">Brand</label>
-                            <select name="brand_id" class="form-input text-gray-500" id="brand">
-
-                                <option v-for="brand in brands" :key="brand.id" :value="brand.id">{{ brand.name }}</option>
-
-                            </select>
-                            <span v-if="createForm.errors.name" class="form-error" >{{ createForm.errors.name }}</span>
+                        
+                        <div class="row">
+                            <div class="form-group h-auto">
+                                <label for="image" class="label">Product Description</label>
+                                <QuillEditor style="height: 150px;" theme="snow" contentType="text" v-model:content="createForm.description" />
+                                <span v-if="createForm.errors.image" class="form-error" >{{ createForm.errors.image }}</span>
+                            </div>
                         </div>
-                    </div>
+                        
 
+                        <div class="row flex gap-4">
+                            <div class="form-group w-6/12">
+                                <label for="category" class="label">Category</label>
+                                <select v-model="createForm.category_id" name="category_id" class="form-input text-gray-500" id="category">
+                                    <option hidden value="">Select once</option>
+                                    <option v-for="category in categories" :key="category.id" :value="category.id">{{ category.name }}</option>
 
-                    <div class="row flex gap-4">
-                        <div class="form-group w-6/12">
-                            <label for="tax" class="label">Tax</label>
-                            <select name="tax_id" class="form-input text-gray-500" id="tax">
+                                </select>
+                                <span v-if="createForm.errors.name" class="form-error" >{{ createForm.errors.name }}</span>
+                            </div>
 
-                                <option v-for="tax in taxes" :key="tax.id" :value="tax.id">{{ tax.name }}</option>
+                            <div class="form-group w-6/12">
+                                <label for="brand" class="label">Brand</label>
+                                <select v-model="createForm.brand_id" name="brand_id" class="form-input text-gray-500" id="brand">
+                                    <option hidden value="">Select once</option>
+                                    <option v-for="brand in brands" :key="brand.id" :value="brand.id">{{ brand.name }}</option>
 
-                            </select>
-                            <span v-if="createForm.errors.name" class="form-error" >{{ createForm.errors.name }}</span>
-                        </div>
-
-                        <div class="form-group w-6/12">
-                            <label for="unit" class="label">Unit</label>
-                            <select name="unit_id" class="form-input text-gray-500" id="unit">
-
-                                <option v-for="unit in units" :key="unit.id" :value="unit.id">{{ unit.name }}</option>
-
-                            </select>
-                            <span v-if="createForm.errors.name" class="form-error" >{{ createForm.errors.name }}</span>
-                        </div>
-                    </div>
-
-                    <div class="row flex gap-4">
-                        <div class="form-group w-6/12">
-                            <label for="unit" class="label">Unit</label>
-                            <label class="block">
-                            <span class="sr-only">Choose profile photo</span>
-                            <input @input="fileInput" multiple  type="file" class="custom-file-upload block w-full text-sm text-gray-500
-                                file:me-4 file:py-2 file:px-4
-                                file:rounded-lg file:border-0
-                                file:text-sm file:font-semibold
-                                file:bg-blue-600 file:text-white
-                                hover:file:bg-blue-700
-                                file:disabled:opacity-50 file:disabled:pointer-events-none
-                                dark:text-neutral-500
-                                dark:file:bg-blue-500
-                                dark:hover:file:bg-blue-400
-                            ">
-                            </label>
-                            
-                            <span v-if="createForm.errors.name" class="form-error" >{{ createForm.errors.name }}</span>
-                        </div>
-
-                        <div class="from-group w-6/12 flex flex-wrap gap-2" v-if="imageUrls.length > 0">
-                            <div v-for="(imageUrl, index) in imageUrls" :key="index" class="w-[70px] h-[70px] border relative border-[#6FD943] rounded-lg">
-                                <img class="w-full h-full object-cover rounded-lg"  :src="imageUrl" alt="">
-                                <button @click="deleteImage(index)" class="w-[20px] h-[20px] bg-red-500 rounded-full text-white absolute top-[-1px] right-[-1px] flex justify-center items-center">x</button>
+                                </select>
+                                <span v-if="createForm.errors.name" class="form-error" >{{ createForm.errors.name }}</span>
                             </div>
                         </div>
 
-                    </div>
 
-                    <div class="row flex gap-4">
-                        <div class="form-group w-4/12">
-                            <label for="purchase_price" class="label">Purchase Price</label>
-                            <input type="text" id="purchase_price" v-model="createForm.purchase_price" class="form-input" placeholder="Enter Purchase Price" >
-                            <span v-if="createForm.errors.name" class="form-error" >{{ createForm.errors.name }}</span>
+                        <div class="row flex gap-4">
+                            <div class="form-group w-6/12">
+                                <label  for="tax" class="label">Tax</label>
+                                <select v-model="createForm.tax_id" name="tax_id" class="form-input text-gray-500" id="tax">
+                                    <option hidden value="">Select once</option>
+                                    <option v-for="tax in taxes" :key="tax.id" :value="tax.id">{{ tax.name }}</option>
+
+                                </select>
+                                <span v-if="createForm.errors.name" class="form-error" >{{ createForm.errors.name }}</span>
+                            </div>
+
+                            <div class="form-group w-6/12">
+                                <label for="unit" class="label">Unit</label>
+                                <select v-model="createForm.unit_id" name="unit_id" class="form-input text-gray-500" id="unit">
+                                    <option hidden value="">Select once</option>
+                                    <option v-for="unit in units" :key="unit.id" :value="unit.id">{{ unit.name }}</option>
+
+                                </select>
+                                <span v-if="createForm.errors.name" class="form-error" >{{ createForm.errors.name }}</span>
+                            </div>
                         </div>
 
-                        <div class="form-group w-4/12">
-                            <label for="selling_price" class="label">Selling Price</label>
-                            <input type="text" id="selling_price" v-model="createForm.selling_price" class="form-input" placeholder="Enter Selling Price" >
-                            <span v-if="createForm.errors.selling_price" class="form-error" >{{ createForm.errors.selling_price }}</span>
+                        <div class="row flex gap-4">
+                            <div class="form-group w-6/12">
+                                <label for="unit" class="label">Images</label>
+                                <label class="block">
+                                <span class="sr-only">Choose profile photo</span>
+                                <input @input="fileInput" multiple  type="file" class="custom-file-upload block w-full text-sm text-gray-500
+                                    file:me-4 file:py-2 file:px-4
+                                    file:rounded-lg file:border-0
+                                    file:text-sm file:font-semibold
+                                    file:bg-blue-600 file:text-white
+                                    hover:file:bg-blue-700
+                                    file:disabled:opacity-50 file:disabled:pointer-events-none
+                                    dark:text-neutral-500
+                                    dark:file:bg-blue-500
+                                    dark:hover:file:bg-blue-400
+                                ">
+                                </label>
+                                
+                                <span v-if="createForm.errors.name" class="form-error" >{{ createForm.errors.name }}</span>
+                            </div>
+
+                            <div class="from-group w-6/12 flex flex-wrap gap-2" v-if="imageUrls.length > 0">
+                                <div v-for="(imageUrl, index) in imageUrls" :key="index" class="w-[70px] h-[70px] border relative border-[#6FD943] rounded-lg">
+                                    <img class="w-full h-full object-cover rounded-lg"  :src="imageUrl" alt="">
+                                    <button @click="deleteImage(index)" class="w-[20px] h-[20px] bg-red-500 rounded-full text-white absolute top-[-1px] right-[-1px] flex justify-center items-center">x</button>
+                                </div>
+                            </div>
+
                         </div>
 
-                        <div class="form-group w-4/12">
-                            <label for="sku" class="label">SKU</label>
-                            <input type="text" id="sku" v-model="createForm.sku" class="form-input" placeholder="Enter SKU Code" >
-                            <span v-if="createForm.errors.sku" class="form-error" >{{ createForm.errors.sku }}</span>
+                        <div class="row flex gap-4">
+                            <div class="form-group w-4/12">
+                                <label for="purchase_price" class="label">Purchase Price</label>
+                                <input type="number" id="purchase_price" v-model="createForm.purchase_price" class="form-input" placeholder="Enter Purchase Price" >
+                                <span v-if="createForm.errors.name" class="form-error" >{{ createForm.errors.name }}</span>
+                            </div>
+
+                            <div class="form-group w-4/12">
+                                <label for="selling_price" class="label">Selling Price</label>
+                                <input type="number" id="selling_price" v-model="createForm.selling_price" class="form-input" placeholder="Enter Selling Price" >
+                                <span v-if="createForm.errors.selling_price" class="form-error" >{{ createForm.errors.selling_price }}</span>
+                            </div>
+
+                            <div class="form-group w-4/12">
+                                <label for="sku" class="label">SKU</label>
+                                <input type="text" id="sku" v-model="createForm.sku" class="form-input" placeholder="Enter SKU Code" >
+                                <span v-if="createForm.errors.sku" class="form-error" >{{ createForm.errors.sku }}</span>
+                            </div>
                         </div>
-                    </div>
 
 
-                    <div class="row py-3 mb-5">
-                        <button class="px-3 py-2 float-end bg-green-500 text-white rounded-md hover:bg-green-600 duration-200" >Create</button>
-                    </div>
-
+                        <div class="row py-3 mb-5">
+                            <button class="px-3 py-2 float-end bg-green-500 text-white rounded-md hover:bg-green-600 duration-200" >Create</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

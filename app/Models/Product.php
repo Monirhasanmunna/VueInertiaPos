@@ -18,18 +18,11 @@ class Product extends Model
         'brand_id', 
         'unit_id', 
         'tax_id', 
-        'image', 
         'purchase_price', 
         'saling_price', 
         'status'
     ];
 
-    protected $appends = ['src'];
-
-    public function getSrcAttribute()
-    {
-        return asset($this->image);
-    }
 
     public function scopeSearch($query, $search)
     {

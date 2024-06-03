@@ -11,6 +11,13 @@ class ProductImage extends Model
 
     protected $fillable = ['product_id', 'image'];
 
+    protected $appends = ['src'];
+
+    public function getSrcAttribute()
+    {
+        return asset($this->image);
+    }
+
     public function product()
     {
         return $this->belongsTo(Product::class);
