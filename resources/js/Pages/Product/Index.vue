@@ -53,7 +53,6 @@ watch(selectAndSearch, debounce(function() {
 }, 200));
 
 
-
 function fileInput(event, form){
     form.image = event.target.files[0];
 }

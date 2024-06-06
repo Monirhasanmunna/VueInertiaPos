@@ -108,8 +108,8 @@ function submit(){
                         </div>
                         
 
-                        <div class="row flex gap-4">
-                            <div class="form-group w-6/12">
+                        <div class="row sm:flex gap-4 space-y-4 sm:space-y-0">
+                            <div class="form-group w-full sm:w-6/12">
                                 <label for="category" class="label">Category</label>
                                 <select v-model="createForm.category_id" name="category_id" class="form-input text-gray-500" id="category">
                                     <option hidden value="">Select once</option>
@@ -119,7 +119,7 @@ function submit(){
                                 <span v-if="createForm.errors.name" class="form-error" >{{ createForm.errors.name }}</span>
                             </div>
 
-                            <div class="form-group w-6/12">
+                            <div class="form-group w-full sm:w-6/12">
                                 <label for="brand" class="label">Brand</label>
                                 <select v-model="createForm.brand_id" name="brand_id" class="form-input text-gray-500" id="brand">
                                     <option hidden value="">Select once</option>
@@ -131,8 +131,8 @@ function submit(){
                         </div>
 
 
-                        <div class="row flex gap-4">
-                            <div class="form-group w-6/12">
+                        <div class="row sm:flex gap-4 space-y-4 sm:space-y-0">
+                            <div class="form-group w-full sm:w-6/12">
                                 <label  for="tax" class="label">Tax</label>
                                 <select v-model="createForm.tax_id" name="tax_id" class="form-input text-gray-500" id="tax">
                                     <option hidden value="">Select once</option>
@@ -142,7 +142,7 @@ function submit(){
                                 <span v-if="createForm.errors.name" class="form-error" >{{ createForm.errors.name }}</span>
                             </div>
 
-                            <div class="form-group w-6/12">
+                            <div class="form-group w-full sm:w-6/12">
                                 <label for="unit" class="label">Unit</label>
                                 <select v-model="createForm.unit_id" name="unit_id" class="form-input text-gray-500" id="unit">
                                     <option hidden value="">Select once</option>
@@ -153,8 +153,8 @@ function submit(){
                             </div>
                         </div>
 
-                        <div class="row flex gap-4">
-                            <div class="form-group w-6/12">
+                        <div class="row w-full sm:flex gap-4 space-y-9 sm:space-y-0">
+                            <div class="form-group w-full sm:w-6/12">
                                 <label for="unit" class="label">Images</label>
                                 <label class="block">
                                 <span class="sr-only">Choose profile photo</span>
@@ -174,29 +174,29 @@ function submit(){
                                 <span v-if="createForm.errors.name" class="form-error" >{{ createForm.errors.name }}</span>
                             </div>
 
-                            <div class="from-group w-6/12 flex flex-wrap gap-2" v-if="imageUrls.length > 0">
+                            <div class="from-group w-full sm:w-6/12 flex flex-wrap gap-2" v-if="imageUrls.length > 0">
                                 <div v-for="(imageUrl, index) in imageUrls" :key="index" class="w-[70px] h-[70px] border relative border-[#6FD943] rounded-lg">
                                     <img class="w-full h-full object-cover rounded-lg"  :src="imageUrl" alt="">
                                     <button @click="deleteImage(index)" class="w-[20px] h-[20px] bg-red-500 rounded-full text-white absolute top-[-1px] right-[-1px] flex justify-center items-center">x</button>
                                 </div>
                             </div>
-
                         </div>
 
-                        <div class="row flex gap-4">
-                            <div class="form-group w-4/12">
+
+                        <div class="row w-full sm:flex gap-4 space-y-4 sm:space-y-0">
+                            <div class="form-group w-full sm:w-6/12">
                                 <label for="purchase_price" class="label">Purchase Price</label>
                                 <input type="number" id="purchase_price" v-model="createForm.purchase_price" class="form-input" placeholder="Enter Purchase Price" >
                                 <span v-if="createForm.errors.name" class="form-error" >{{ createForm.errors.name }}</span>
                             </div>
 
-                            <div class="form-group w-4/12">
+                            <div class="form-group w-full sm:w-6/12">
                                 <label for="selling_price" class="label">Selling Price</label>
                                 <input type="number" id="selling_price" v-model="createForm.selling_price" class="form-input" placeholder="Enter Selling Price" >
                                 <span v-if="createForm.errors.selling_price" class="form-error" >{{ createForm.errors.selling_price }}</span>
                             </div>
 
-                            <div class="form-group w-4/12">
+                            <div class="form-group w-full sm:w-6/12">
                                 <label for="sku" class="label">SKU</label>
                                 <input type="text" id="sku" v-model="createForm.sku" class="form-input" placeholder="Enter SKU Code" >
                                 <span v-if="createForm.errors.sku" class="form-error" >{{ createForm.errors.sku }}</span>
