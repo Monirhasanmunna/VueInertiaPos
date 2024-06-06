@@ -11,17 +11,24 @@ class Product extends Model
 
     protected $fillable = [
         'id', 
-        'unique_code', 
         'name', 
-        'description', 
         'category_id', 
         'brand_id', 
         'unit_id', 
         'tax_id', 
-        'purchase_price', 
-        'saling_price', 
-        'status'
+        'status',
+        'barcode',
+        'barcode_path',
     ];
+
+
+    protected $appends = ['barcodeImg'];
+
+
+    public function getBarcodeImgAttribute()
+    {
+        return asset('storage/'.$this->barcode_path);
+    }
 
 
     public function scopeSearch($query, $search)

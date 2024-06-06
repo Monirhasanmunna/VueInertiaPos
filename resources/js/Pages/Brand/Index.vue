@@ -167,7 +167,7 @@ function destroy($id){
                                                     <img :src="brand.src" class="w-full h-full object-cover" :alt="brand.src" srcset="">
                                                 </div>
 
-                                                <div v-else class="w-[60px] h-[60px] rounded-xl border-2 border-[#6FD943] flex justify-center items-center text-[20px] text-gray-300">CA</div>
+                                                <div v-else class="w-[60px] h-[60px] rounded-xl border-2 border-[#6FD943] flex justify-center items-center text-[20px] text-gray-300">BR</div>
                                             </td>
                                             <td class="table-td">{{ brand.name }}</td>
                                             <td class="table-td">

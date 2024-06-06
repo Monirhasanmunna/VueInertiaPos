@@ -13,7 +13,9 @@ use Inertia\Inertia;
 use App\Http\Traits\generateUniqueSKU;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Picqer\Barcode\BarcodeGeneratorPNG;
 
 class ProductController extends Controller
 {
@@ -80,11 +82,19 @@ class ProductController extends Controller
 
         $product = new Product();
         $product->name = $request->name;
-        $product->unique_code = $this->generateUniqueSKU();
+        $product->barcode = $this->generateUniqueSKU();
         $product->category_id = $request->category_id;
         $product->brand_id = $request->brand_id;
         $product->unit_id = $request->unit_id;
         $product->tax_id = $request->tax_id;
+        $product->save();
+
+
+        $generator = new BarcodeGeneratorPNG();
+        $barcode = $generator->getBarcode($product->barcode, $generator::TYPE_CODE_128);
+        $barcode_path = 'uploads/barcodes/' . $product->barcode . '.png';
+        Storage::disk('public')->put($barcode_path, $barcode);
+        $product->barcode_path = $barcode_path;
         $product->save();
 
 
@@ -125,7 +135,8 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $product = Product::with(['category', 'tax', 'brand', 'unit', 'images', 'details'])->find($id);
+        return response()->json($product);
     }
 
     /**

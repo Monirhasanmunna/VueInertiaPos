@@ -17,7 +17,8 @@ return new class extends Migration
             $table->foreignId('brand_id')->constrained('brands')->onDelete('cascade');
             $table->foreignId('unit_id')->constrained('units')->onDelete('cascade');
             $table->foreignId('tax_id')->constrained('taxes')->onDelete('cascade');
-            $table->unsignedBigInteger('unique_code')->unique();
+            $table->unsignedBigInteger('barcode')->unique();
+            $table->string('barcode_path')->unique()->nullable();
             $table->string('name');
             $table->boolean('status')->default(true);
             $table->timestamps();
