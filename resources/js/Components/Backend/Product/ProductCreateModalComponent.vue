@@ -68,6 +68,7 @@ onMounted(() => getAllData());
 
 function submit(){
     emits('create', createForm);
+    imageUrls.value = [];
 }
 
 </script>

@@ -107,14 +107,12 @@ class ProductController extends Controller
 
 
         foreach ($request->images as $key => $image) {
-
             $newFileName   = $this->generateUniqueSKU() . '.' . $image->getClientOriginalExtension();
-            $directory   = 'uploads/' . 'products' . '/';
-            $image->move($directory, $newFileName);
+            $path = $image->storeAs('uploads/products', $newFileName, 'public');
 
             $product->images()->create([
                 'product_id' => $product->id,
-                'image' => $directory . $newFileName
+                'image' => 'uploads/products/'.$newFileName
             ]);
         }
 
@@ -144,7 +142,61 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // dd($request->all());
+
+        $request->validate([
+            'name' => 'required|unique:products,name,'. $id,
+            'description' => 'required',
+            'category_id' => 'required',
+            'brand_id' => 'required',
+            'unit_id' => 'required',
+            'tax_id' => 'required',
+            'purchase_price' => 'required',
+            'selling_price' => 'required',
+        ]);
+
+
+        $product = Product::find($id);
+        $product->name = $request->name;
+        $product->category_id = $request->category_id;
+        $product->brand_id = $request->brand_id;
+        $product->unit_id = $request->unit_id;
+        $product->tax_id = $request->tax_id;
+        $product->save();
+
+
+        $product->details()->update([
+            'product_id' => $product->id,
+            'description' => $request->description,
+            'purchase_price' => $request->purchase_price,
+            'selling_price' => $request->selling_price,
+            'quantity' => $request->quantity
+        ]);
+
+
+        if($request->hasFile('images')) { 
+
+            foreach ($product->images as $file) {
+                if(file_exists($file->image)){
+                     unlink($file->image);
+                }
+               
+                $file->delete();
+            }
+
+            foreach ($request->images as $key => $image) {
+                $newFileName   = $this->generateUniqueSKU().'.' . $image->getClientOriginalExtension();
+                $path = $image->storeAs('uploads/products', $newFileName, 'public');
+    
+                $product->images()->create([
+                    'product_id' => $product->id,
+                    'image' => 'uploads/products/'.$newFileName
+                ]);
+            }
+        }
+
+
+        return Redirect::back();
     }
 
     /**
@@ -152,6 +204,19 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $product = Product::find($id);
+
+        if ('storage/'.$product->barcode_path) {
+            unlink(public_path('storage/'.$product->barcode_path));
+        }
+
+        // Delete the associated images
+        foreach ($product->images as $image) {
+            if ('storage/'.$image->image) {
+                unlink(public_path('storage/'.$image->image));
+            }
+        }
+
+        $product->delete();
     }
 }

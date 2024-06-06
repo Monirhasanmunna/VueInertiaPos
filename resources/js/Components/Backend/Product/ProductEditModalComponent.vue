@@ -6,6 +6,7 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import { ref, onMounted, toRefs, watch } from 'vue';
 
 const emits = defineEmits(['update']);
+
 const props = defineProps({
     selectedProduct : Object
 });
@@ -21,15 +22,16 @@ const editForm = useForm({
     description : '',
     purchase_price : '',
     selling_price : '',
-    sku: '',
-    images : []
+    quantity: '',
+    images : [],
+    _method: 'PUT',
 });
 
 
 const imageUrls = ref([]);
 
 watch(selectedProduct, () => {
-    console.log(selectedProduct.value);
+    editForm.id = selectedProduct.value.id;
     editForm.name = selectedProduct.value.name;
     editForm.category_id = selectedProduct.value.category_id;
     editForm.brand_id = selectedProduct.value.brand_id;
@@ -38,6 +40,7 @@ watch(selectedProduct, () => {
     editForm.description = selectedProduct.value.details.description;
     editForm.purchase_price = selectedProduct.value.details.purchase_price;
     editForm.selling_price = selectedProduct.value.details.selling_price;
+    editForm.quantity = selectedProduct.value.details.quantity;
 
     if(selectedProduct.value.images){
         imageUrls.value = selectedProduct.value.images.map(image => image.src);
@@ -89,8 +92,8 @@ function getAllData(){
 onMounted(() => getAllData());
 
 
-function submit(){
-    emits('create', editForm);
+function update(){
+    emits('update', editForm);
 }
 
 
@@ -114,7 +117,7 @@ function submit(){
             </div>
                 <div class="p-4 py-8">
                     
-                    <form class="space-y-8" @submit.prevent="submit">
+                    <form class="space-y-8" @submit.prevent="update">
                         <div class="row">
                             <div class="form-group">
                                 <label for="name" class="label">Product Name</label>
@@ -221,9 +224,9 @@ function submit(){
                             </div>
 
                             <div class="form-group w-full sm:w-6/12">
-                                <label for="sku" class="label">SKU</label>
-                                <input type="text" id="sku" v-model="editForm.sku" class="form-input" placeholder="Enter SKU Code" >
-                                <span v-if="editForm.errors.sku" class="form-error" >{{ editForm.errors.sku }}</span>
+                                <label for="quantity" class="label">Quantity</label>
+                                <input type="text" id="quantity" v-model="editForm.quantity" class="form-input" placeholder="Enter Quantity Code" >
+                                <span v-if="editForm.errors.quantity" class="form-error" >{{ editForm.errors.quantity }}</span>
                             </div>
                         </div>
 

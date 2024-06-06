@@ -24,6 +24,7 @@ const props = defineProps({
     taxes : Array
 });
 
+console.log(props.products.data);
 
 const breadcrumb = {
     title : 'Product List',
@@ -88,7 +89,7 @@ async function edit($id){
     });
 }
 
-function update(){
+function update(editForm){
     editForm.post(route('product.update', {'id' : editForm.id}), {
         onSuccess: () => {
             editForm.reset()
@@ -171,11 +172,11 @@ function destroy($id){
                                         <tr v-for="(product, index) in products.data" :key="product.id" >
                                             <td class="table-td">{{ index+1 }}</td>
                                             <td class="table-td">
-                                                <div v-if="product.images" class="w-[50px] h-[50px] overflow-hidden rounded-xl border-2 border-[#6FD943]">
+                                                <div v-if="product.images.length > 0" class="w-[50px] h-[50px] overflow-hidden rounded-xl border-2 border-[#6FD943]">
                                                     <img :src="product.images[0].src" class="w-full h-full object-cover" :alt="product.images[0].src" srcset="">
                                                 </div>
 
-                                                <div v-else class="w-[50px] h-[50px] rounded-xl border-2 border-[#6FD943] flex justify-center items-center text-[20px] text-gray-300">CA</div>
+                                                <div v-else class="w-[50px] h-[50px] rounded-xl border-2 border-[#6FD943] flex justify-center items-center text-[20px] text-gray-300">PT</div>
                                             </td>
                                             <td class="table-td text-center">{{ product.name }}</td>
                                             <td class="table-td text-center">{{ product.category.name }}</td>

@@ -15,7 +15,7 @@ class ProductImage extends Model
 
     public function getSrcAttribute()
     {
-        return asset($this->image);
+        return asset('storage/'.$this->image);
     }
 
     public function product()
