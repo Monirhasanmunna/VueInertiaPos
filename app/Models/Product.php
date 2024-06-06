@@ -33,7 +33,8 @@ class Product extends Model
 
     public function scopeSearch($query, $search)
     {
-        return $query->where('name', 'like', '%' . $search . '%');
+        return $query->where('name', 'like', '%' . $search . '%')
+                     ->orWhere('barcode', 'like', '%' . $search . '%');
     }
     
     
