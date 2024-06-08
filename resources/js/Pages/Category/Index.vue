@@ -70,6 +70,7 @@ const editForm = useForm({
     src: '',
     id: '',
     status: '',
+    type: '',
     _method: 'PUT'
 });
 
@@ -83,6 +84,7 @@ function edit($slug){
             editForm.id = res.data.id
             editForm.src = res.data.src
             editForm.status = res.data.status
+            editForm.type = res.data.type
             HSOverlay.open('#category-edit-modal')
         }
     });
@@ -155,7 +157,8 @@ function destroy($id){
                                             <th width="10%" class="table-th">SL</th>
                                             <th width="20%" class="table-th">Image</th>
                                             <th scope="col" class="table-th">Name</th>
-                                            <th width="25%" class="table-th">Status</th>
+                                            <th  class="table-th">Status</th>
+                                            <th width="15%" class="table-th text-center">Type</th>
                                             <th width="10%" class="table-th text-center">Action</th>
                                         </tr>
                                     </thead>
@@ -173,6 +176,10 @@ function destroy($id){
                                             <td class="table-td">
                                                 <span v-if="category.status == 1" class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium border border-teal-500 text-teal-500">Active</span>
                                                 <span v-else class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium border border-red-500 text-red-500">Inactive</span>
+                                            </td>
+                                            <td class="table-td text-center">
+                                                <span v-if="category.type == 'featured' " class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium border border-teal-500 text-teal-500">Featured</span>
+                                                <span v-else class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium border border-[#1F456E] text-[#1F456E]">Non Featured</span>
                                             </td>
                                             <td class="table-td flex gap-4 items-center h-[90px]">
                                                 <button @click="edit(category.slug)" class="px-2 py-1.5 text-[17px] text-green-500 border border-green-500 rounded-md duration-200 hover:bg-[#6FD943] hover:text-white">
@@ -238,6 +245,35 @@ function destroy($id){
                                 file:py-2.5 file:px-4
                                 dark:file:bg-neutral-700 dark:file:text-neutral-400">
                                 <span v-if="editForm.errors.image" class="form-error" >{{ editForm.errors.image }}</span>
+                            </div>
+
+
+                            
+                            <div class="form-group">
+                                <label for="image" class="label">Type</label>
+                                <ul class="flex flex-col sm:flex-row">
+                                    <li class="inline-flex items-center gap-x-2.5 py-3 px-4 text-sm font-medium bg-white border text-gray-800 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg sm:-ms-px sm:mt-0 sm:first:rounded-se-none sm:first:rounded-es-lg sm:last:rounded-es-none sm:last:rounded-se-lg dark:bg-neutral-800 dark:border-neutral-700 dark:text-white">
+                                        <div class="relative flex items-start w-full">
+                                        <div class="flex items-center h-5">
+                                            <input id="featured" value="featured" v-model="editForm.type" :checked="editForm.type == 'featured'"  type="radio" class="border-gray-200 rounded disabled:opacity-50 dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800">
+                                        </div>
+                                        <label for="featured" class="ms-3.5 block w-full text-sm text-gray-600 dark:text-neutral-500">
+                                            Featured
+                                        </label>
+                                        </div>
+                                    </li>
+
+                                    <li class="inline-flex items-center gap-x-2.5 py-3 px-4 text-sm font-medium bg-white border text-gray-800 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg sm:-ms-px sm:mt-0 sm:first:rounded-se-none sm:first:rounded-es-lg sm:last:rounded-es-none sm:last:rounded-se-lg dark:bg-neutral-800 dark:border-neutral-700 dark:text-white">
+                                        <div class="relative flex items-start w-full">
+                                        <div class="flex items-center h-5">
+                                            <input id="non-featured" value="non-featured" v-model="editForm.type" :checked="editForm.type == 'non-featured'" type="radio" class="border-gray-200 rounded disabled:opacity-50 dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800">
+                                        </div>
+                                        <label for="non-featured" class="ms-3.5 block w-full text-sm text-gray-600 dark:text-neutral-500">
+                                            Non Featured
+                                        </label>
+                                        </div>
+                                    </li>
+                                </ul>
                             </div>
 
 

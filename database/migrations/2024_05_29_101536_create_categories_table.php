@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->string('image')->nullable();
             $table->boolean('status')->default(true);
+            $table->enum('type', ['featured', 'non-featured'])->default('non-featured');
             $table->timestamps();
         });
     }

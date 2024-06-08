@@ -6,7 +6,8 @@ const emits = defineEmits(['create']);
     
 const createForm = useForm({
     name : '',
-    image : ''
+    image : '',
+    type : 'non-featured'
 });
 
 function fileInput(event){
@@ -51,6 +52,33 @@ function submit(){
                                 file:py-3 file:px-4
                                 dark:file:bg-neutral-700 dark:file:text-neutral-400">
                                 <span v-if="createForm.errors.image" class="form-error" >{{ createForm.errors.image }}</span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="image" class="label">Type</label>
+                                <ul class="flex flex-col sm:flex-row">
+                                    <li class="inline-flex items-center gap-x-2.5 py-3 px-4 text-sm font-medium bg-white border text-gray-800 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg sm:-ms-px sm:mt-0 sm:first:rounded-se-none sm:first:rounded-es-lg sm:last:rounded-es-none sm:last:rounded-se-lg dark:bg-neutral-800 dark:border-neutral-700 dark:text-white">
+                                        <div class="relative flex items-start w-full">
+                                        <div class="flex items-center h-5">
+                                            <input id="featured" value="featured" v-model="createForm.type" :checked="createForm.type == 'featured'"  type="radio" class="border-gray-200 rounded disabled:opacity-50 dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800">
+                                        </div>
+                                        <label for="featured" class="ms-3.5 block w-full text-sm text-gray-600 dark:text-neutral-500">
+                                            Featured
+                                        </label>
+                                        </div>
+                                    </li>
+
+                                    <li class="inline-flex items-center gap-x-2.5 py-3 px-4 text-sm font-medium bg-white border text-gray-800 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg sm:-ms-px sm:mt-0 sm:first:rounded-se-none sm:first:rounded-es-lg sm:last:rounded-es-none sm:last:rounded-se-lg dark:bg-neutral-800 dark:border-neutral-700 dark:text-white">
+                                        <div class="relative flex items-start w-full">
+                                        <div class="flex items-center h-5">
+                                            <input id="non-featured" value="non-featured" v-model="createForm.type" :checked="createForm.type == 'non-featured'" type="radio" class="border-gray-200 rounded disabled:opacity-50 dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800">
+                                        </div>
+                                        <label for="non-featured" class="ms-3.5 block w-full text-sm text-gray-600 dark:text-neutral-500">
+                                            Non Featured
+                                        </label>
+                                        </div>
+                                    </li>
+                                </ul>
                             </div>
 
                             <div class="form-group py-2">

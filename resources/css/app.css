@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+    @import url("https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap");
+}
+
+
+body {
+    font-family: "Rubik", sans-serif;
+}
 
 @layer components {
     .menu {
@@ -70,5 +78,31 @@
     .form-error {
         @apply text-[12px] text-red-500 px-1;
     }
+
+
+
+
+    /* backend style */
+
+    .container {
+        @apply !w-full !px-[.75rem] mx-auto 2xl:!max-w-[1500px] xl:!max-w-[1200px] 
+         lg:!max-w-[992px] md:!max-w-[980px] sm:!max-w-[576px];
+      }
+      
+      .gradient-color {
+        background: linear-gradient(180deg, #0000, #0000 50%, #0000009e);
+      }
+      
+      .text-shadow {
+        text-shadow: 0 0 4px #000;
+      }
+      
+      .custom {
+        left: 50%;
+        right: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        z-index: 10000;
+      }
     
 }

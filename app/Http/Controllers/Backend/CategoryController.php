@@ -44,6 +44,7 @@ class CategoryController extends Controller
         $category = new Category();
         $category->name = $request->name;
         $category->slug = Str::slug($request->name);
+        $category->type = $request->type;
         $category->save();
 
 
@@ -72,6 +73,7 @@ class CategoryController extends Controller
         $category->name = $request->name;
         $category->status = $request->status;
         $category->slug = Str::slug($request->name);
+        $category->type = $request->type;
         $category->save();
 
 

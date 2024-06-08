@@ -21,6 +21,6 @@
     "dependencies": {
         "@vueup/vue-quill": "^1.2.0",
         "lodash": "^4.17.21",
-        "preline": "^2.0.3",
+        "preline": "^2.0.3"
     }
 }

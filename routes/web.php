@@ -21,20 +21,12 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Home', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware(['auth', 'verified'])->group(function () {
 
-Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', function () {
+        return Inertia::render('Dashboard');
+    })->name('dashboard');
 
     Route::group(['as'=> 'category.', 'prefix'=> 'category'], function(){
         Route::get('/', [CategoryController::class, 'index'])->name('index');
@@ -85,5 +77,19 @@ Route::middleware('auth')->group(function () {
     });
     
 });
+
+
+// forntend routes
+
+Route::get('/', function () {
+    return Inertia::render('Home', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'laravelVersion' => Application::VERSION,
+        'phpVersion' => PHP_VERSION,
+    ]);
+});
+
+
 
 require __DIR__.'/auth.php';
