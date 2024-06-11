@@ -26,7 +26,7 @@ import { Head, Link } from '@inertiajs/vue3';
           Small Changes Big Difference
         </p>
         <div class="mt-[50px]">
-          <Link class="sm:py-3 py-2 sm:px-8 px-6 text-sm sm:text-[16px] rounded-full border border-[#323232] bg-[#323232] text-[white] uppercase outline-none hover:bg-[transparent] hover:text-[#323232] duration-200" >
+          <Link :href="route('shop.index')" class="sm:py-3 py-2 sm:px-8 px-6 text-sm sm:text-[16px] rounded-full border border-[#323232] bg-[#323232] text-[white] uppercase outline-none hover:bg-[transparent] hover:text-[#323232] duration-200" >
             Shop Now
           </Link>
         </div>

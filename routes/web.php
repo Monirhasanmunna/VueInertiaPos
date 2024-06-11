@@ -5,6 +5,7 @@ use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\TaxController;
 use App\Http\Controllers\Backend\UnitController;
+use App\Http\Controllers\Frontend\CategoryController as FrontendCategoryController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -82,12 +83,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
 // forntend routes
 
 Route::get('/', function () {
-    return Inertia::render('Home', [
+    return Inertia::render('Frontend/Home', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
+});
+
+
+Route::group(['as'=> 'shop.', 'prefix'=> 'shop'], function(){
+    Route::get('/', [FrontendCategoryController::class, 'index'])->name('index');
+    Route::get('/featured-category', [FrontendCategoryController::class, 'featuredCategory'])->name('featured-category');
 });
 
 

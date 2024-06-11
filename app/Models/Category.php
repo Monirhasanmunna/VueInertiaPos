@@ -29,4 +29,13 @@ class Category extends Model
         return $query->where('name', 'like', '%' . $search . '%');
     }
 
+    public function  scopeActive($query)
+    {
+        return $query->where('status', true);
+    }
+
+    public function scopeFeatured($query)
+    {
+        return $query->where('type', 'featured');
+    }
 }
